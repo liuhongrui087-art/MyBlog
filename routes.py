@@ -1,0 +1,76 @@
+from flask import Blueprint, request, make_response, render_template, session
+
+from app import db
+# 创建蓝图实例 bp
+bp = Blueprint('main', __name__)
+
+# ========= 定义数据库模型（一张User表，存用户名）=========
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    username = db.Column(db.String(80),unique=False,nullable=False)
+# 全部路由改成 @bp.route
+@bp.route('/index')
+def index():
+    return '''
+    <form action="/submit" method="post">
+        输入名字：<input type="text" name="username">
+        <button type="submit">提交</button>
+    </form>
+    '''
+
+@bp.route('/home')
+def home():
+    return 'Welcome to the Home Page!'
+
+@bp.route('/about')
+def about():
+    return 'This is the About Page.'
+
+@bp.route('/greet/<name>')
+def greet(name):
+    return f'Hello, {name}!'
+
+@bp.route('/submit', methods=['POST'])
+def submit():
+    username = request.form.get('username')
+    if username:
+        # 新增：把名字写入数据库
+        new_user = User(username=username)
+        db.session.add(new_user)
+        db.session.commit()
+        session['username'] = username
+    return f'Hello,{username}'
+
+@bp.route('/custom_response')
+def custom_response():
+    response = make_response('This is a custom response!')
+    response.headers['X-Custom-Header'] = 'value'
+    return response
+
+@bp.route('/')
+def hello():
+    return render_template('hello.html')
+
+@bp.route('/show_users')
+def show_users():
+    all_user = User.query.all()
+    html_text = "<h3>数据库内所有用户名</h3>"
+    for user in all_user:
+        html_text += f"id:{user.id},name:{user.username}<br>"
+    return html_text
+# ========= Session 示例 =========
+
+@bp.route('/set_session/<username>')
+def set_session(username):
+    session['username'] = username
+    return f'Session set for {username}'
+
+@bp.route('/get_session')
+def get_session():
+    username = session.get('username')
+    return f'Hello, {username}!' if username else 'No session data'
+
+@bp.route('/clear_session')
+def clear_session():
+    session.pop('username', None)   # 只删这一个键，键不存在也不报错
+    return 'Session cleared'

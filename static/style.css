@@ -1,0 +1,8 @@
+h1 {
+    color: blue;          /* 文字蓝色 */
+    background-color: #f0f0f0; /* 背景浅灰色 */
+    padding: 10px;        /* 内边距 */
+}
+body {
+    background: #f8f8f8;  /* 整个网页背景色 */
+}

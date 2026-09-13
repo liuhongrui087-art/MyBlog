@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>我的博客</title>
+    <!-- 就是这一行！引入static下的css静态文件 -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+    <img src="{{ url_for('static', filename='images/cat.jpg') }}" alt="小猫图片">
+</head>
+<body>
+    <h1>你好，博客页面</h1>
+</body>
+</html>
