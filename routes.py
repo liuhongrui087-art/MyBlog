@@ -28,7 +28,7 @@ def about():
 
 @bp.route('/greet/<name>')
 def greet(name):
-    return f'Hello, {name}!'
+    return render_template('greet.html', name=name)
 
 @bp.route('/submit', methods=['POST'])
 def submit():
