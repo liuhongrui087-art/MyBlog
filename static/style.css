@@ -4,5 +4,22 @@ h1 {
     padding: 10px;        /* 内边距 */
 }
 body {
-    background: #f8f8f8;  /* 整个网页背景色 */
+    background: #f8f8f8;
+    margin: 0;
+}
+nav {
+    background: #333;
+    padding: 14px 20px;
+    margin-bottom: 24px;
+}
+nav a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 20px;
+}
+nav a:hover {
+    text-decoration: underline;
+}
+main {
+    padding: 0 20px;
 }

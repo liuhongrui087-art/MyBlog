@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}我的博客{% endblock %}</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('main.hello') }}">首页</a>
+        <a href="{{ url_for('main.index') }}">提交名字</a>
+        <a href="{{ url_for('main.show_users') }}">用户列表</a>
+        <a href="{{ url_for('main.about') }}">关于</a>
+    </nav>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

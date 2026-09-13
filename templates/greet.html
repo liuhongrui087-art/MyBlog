@@ -1,10 +1,7 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-    <meta charset="UTF-8">
-    <title>问候</title>
-</head>
-<body>
+{% extends "base.html" %}
+
+{% block title %}问候 - 我的博客{% endblock %}
+
+{% block content %}
     <h3>你好，{{ name }}！</h3>
-</body>
-</html>
+{% endblock %}
