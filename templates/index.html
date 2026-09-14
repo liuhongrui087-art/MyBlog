@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block title %}提交名字{% endblock %}
+
+{% block content %}
+    <h3>提交名字</h3>
+    <form action="{{ url_for('main.submit') }}" method="post">
+        输入名字：<input type="text" name="username">
+        <button type="submit">提交</button>
+    </form>
+{% endblock %}

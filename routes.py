@@ -11,12 +11,7 @@ class User(db.Model):
 # 全部路由改成 @bp.route
 @bp.route('/index')
 def index():
-    return '''
-    <form action="/submit" method="post">
-        输入名字：<input type="text" name="username">
-        <button type="submit">提交</button>
-    </form>
-    '''
+    return render_template('index.html')
 
 @bp.route('/home')
 def home():
@@ -39,7 +34,7 @@ def submit():
         db.session.add(new_user)
         db.session.commit()
         session['username'] = username
-    return f'Hello,{username}'
+    return render_template('submit.html', username=username)
 
 @bp.route('/custom_response')
 def custom_response():
