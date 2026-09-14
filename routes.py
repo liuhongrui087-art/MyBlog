@@ -54,10 +54,8 @@ def hello():
 @bp.route('/show_users')
 def show_users():
     all_user = User.query.all()
-    html_text = "<h3>数据库内所有用户名</h3>"
-    for user in all_user:
-        html_text += f"id:{user.id},name:{user.username}<br>"
-    return html_text
+    return render_template('show_users.html', users=all_user)
+
 # ========= Session 示例 =========
 
 @bp.route('/set_session/<username>')
