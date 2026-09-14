@@ -10,6 +10,11 @@
 - **模板继承**：统一的页面母版，导航栏自动高亮当前页
 - **XSS 防护**：所有用户输入经 Jinja2 自动转义
 
+## 环境要求
+
+- **Python 3.11**（推荐）
+  > 其他版本可能缺少部分依赖的预编译包，安装时需本地编译而失败。
+
 ## 技术栈
 
 | 层 | 技术 |
@@ -25,20 +30,20 @@
 ### 1. 获取代码
 
 ```bash
-git clone <仓库地址>
+git clone https://github.com/liuhongrui087-art/MyBlog.git
 cd MyBlog
 ```
 
 ### 2. 创建并激活虚拟环境
 
-**Windows:**&#8203;
+**Windows:**
 
 ```bash
 python -m venv venv
 venv\Scripts\activate
 ```
 
-**macOS / Linux:**&#8203;
+**macOS / Linux:**
 
 ```bash
 python3 -m venv venv
@@ -48,8 +53,11 @@ source venv/bin/activate
 ### 3. 安装依赖
 
 ```bash
-pip install -r requirements.txt
+pip install -r requirements.txt --only-binary=:all:
 ```
+
+> `--only-binary=:all:` 表示只使用预编译包。若某个依赖在当前环境下没有预编译版本，
+> pip 会直接指出是哪个包，而不是尝试本地编译（Windows 上没有 C 编译器，编译必然失败）。
 
 ### 4. 启动
 
@@ -73,8 +81,12 @@ MyBlog/
 ├── main.py                 # 程序入口
 ├── config.py               # 环境配置（开发 / 测试 / 生产）
 ├── routes.py               # 路由与数据模型
+├── seed.py                 # 插入示例文章的脚本（可选）
 ├── requirements.txt        # 依赖清单
+├── README.md               # 本文件
 ├── .flaskenv               # Flask CLI 环境变量
+├── .gitignore              # Git 忽略规则
+├── __init__.py
 ├── templates/              # Jinja2 模板
 │   ├── base.html           # 母版（导航 + 页面骨架）
 │   ├── hello.html          # 首页
@@ -116,3 +128,10 @@ MyBlog/
 - 数据库文件 `instance/blog.db` **未纳入版本控制**，首次运行时由 `db.create_all()` 自动创建
 - 虚拟环境 `venv/` **未纳入版本控制**，请按上面第 2 步自行创建
 - 用户输入全部通过 Jinja2 模板渲染并自动转义，已修复反射型与存储型 XSS
+
+## 已知限制
+
+- **没有用户认证**：当前任何人都能发布、编辑、删除文章。后续计划加入注册 / 登录功能。
+- **`SECRET_KEY` 是开发用示例值**：硬编码在 `config.py` 中，正式部署时应改为从环境变量读取。
+- **没有数据库迁移机制**：模型变更后需删除 `instance/blog.db` 让其重新生成；
+  正式项目应改用 Flask-Migrate 等迁移工具。
