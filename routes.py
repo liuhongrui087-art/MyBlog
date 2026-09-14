@@ -75,7 +75,8 @@ def custom_response():
 
 @bp.route('/')
 def hello():
-    return render_template('hello.html')
+    posts = Post.query.order_by(Post.created_at.desc()).limit(5).all()
+    return render_template('hello.html', posts=posts)
 
 @bp.route('/user/list')
 def show_users():

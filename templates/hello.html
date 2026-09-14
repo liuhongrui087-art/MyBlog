@@ -3,6 +3,22 @@
 {% block title %}我的博客{% endblock %}
 
 {% block content %}
-    <h1>你好，博客页面</h1>
-    <img src="{{ url_for('static', filename='images/cat.jpg') }}" alt="小猫图片">
+    <h1>我的博客</h1>
+
+    <h3>最新文章</h3>
+
+    {% if posts %}
+        <ul>
+        {% for post in posts %}
+            <li>
+                <a href="{{ url_for('main.post_detail', post_id=post.id) }}">{{ post.title }}</a>
+                <small>{{ post.created_at.strftime('%Y-%m-%d') }}</small>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>还没有文章。</p>
+    {% endif %}
+
+    <p><a href="{{ url_for('main.post_list') }}">查看全部文章 →</a></p>
 {% endblock %}
