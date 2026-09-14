@@ -14,8 +14,11 @@ def create_app(config_name):
     # 数据库放在instance文件夹（你项目已经有instance目录，推荐放这里）
     # 拿到app.py所在文件夹
     basedir = os.path.abspath(os.path.dirname(__file__))
+    # 数据库放在 instance 目录下（该目录不在版本控制里，克隆后可能不存在，先确保它存在）
+    db_dir = os.path.join(basedir, "instance")
+    os.makedirs(db_dir, exist_ok=True)
     # 拼接数据库路径，不管项目放在哪个盘都自动适配
-    db_path = os.path.join(basedir, "instance", "blog.db")
+    db_path = os.path.join(db_dir, "blog.db")
     # sqlite URI 写法
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + db_path
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False  # 关闭警告
