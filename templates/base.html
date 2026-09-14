@@ -7,10 +7,13 @@
 </head>
 <body>
     <nav>
-        <a href="{{ url_for('main.hello') }}">首页</a>
-        <a href="{{ url_for('main.index') }}">提交名字</a>
-        <a href="{{ url_for('main.show_users') }}">用户列表</a>
-        <a href="{{ url_for('main.about') }}">关于</a>
+        <nav>
+    <a href="{{ url_for('main.hello') }}" class="{{ 'active' if request.endpoint == 'main.hello' else '' }}">首页</a>
+    <a href="{{ url_for('main.index') }}" class="{{ 'active' if request.endpoint == 'main.index' else '' }}">提交名字</a>
+    <a href="{{ url_for('main.show_users') }}" class="{{ 'active' if request.endpoint == 'main.show_users' else '' }}">用户列表</a>
+    <a href="{{ url_for('main.about') }}" class="{{ 'active' if request.endpoint == 'main.about' else '' }}">关于</a>
+</nav>
+
     </nav>
 
     <main>
