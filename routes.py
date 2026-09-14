@@ -18,6 +18,7 @@ class Post(db.Model):
     title = db.Column(db.String(120),nullable=False)
     content = db.Column(db.Text,nullable=False)
     created_at = db.Column(db.DateTime,default=datetime.now)
+    updated_at = db.Column(db.DateTime, nullable=True)
 
 @bp.route('/posts')
 def post_list():
@@ -42,6 +43,22 @@ def post_save():
 def post_detail(post_id):
     post = Post.query.get_or_404(post_id)
     return render_template('post_detail.html', post=post)
+
+@bp.route('/posts/<int:post_id>/edit', methods=['GET', 'POST'])
+def post_edit(post_id):
+    post = Post.query.get_or_404(post_id)
+
+    if request.method == 'POST':
+        title = request.form.get('title')
+        content = request.form.get('content')
+        if title and content:
+            post.title = title
+            post.content = content
+            post.updated_at = datetime.now()
+            db.session.commit()
+            return redirect(url_for('main.post_detail', post_id=post.id))
+
+    return render_template('post_edit.html', post=post)
 
 
 @bp.route('/user/new')

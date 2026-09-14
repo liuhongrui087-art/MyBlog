@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}编辑：{{ post.title }}{% endblock %}
+
+{% block content %}
+    <h3>编辑文章</h3>
+    <form action="{{ url_for('main.post_edit', post_id=post.id) }}" method="post">
+        <p>
+            <label>标题</label><br>
+            <input type="text" name="title" value="{{ post.title }}" size="50">
+        </p>
+        <p>
+            <label>正文</label><br>
+            <textarea name="content" rows="10" cols="60">{{ post.content }}</textarea>
+        </p>
+        <button type="submit">保存修改</button>
+    </form>
+    <p><a href="{{ url_for('main.post_detail', post_id=post.id) }}">取消</a></p>
+{% endblock %}
