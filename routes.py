@@ -1,5 +1,5 @@
-from flask import Blueprint, request, make_response, render_template, session, jsonify
-
+from flask import Blueprint, request, make_response, render_template, session, jsonify, redirect, url_for
+from datetime import datetime
 from app import db
 
 
@@ -11,6 +11,39 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80),unique=False,nullable=False)
 # 全部路由改成 @bp.route
+
+# ========= 文章模型 =========
+class Post(db.Model):
+    id = db.Column(db.Integer,primary_key=True)
+    title = db.Column(db.String(120),nullable=False)
+    content = db.Column(db.Text,nullable=False)
+    created_at = db.Column(db.DateTime,default=datetime.now)
+
+@bp.route('/posts')
+def post_list():
+    posts = Post.query.order_by(Post.created_at.desc()).all()
+    return render_template('post_list.html',posts=posts)
+
+@bp.route('/posts/new')
+def post_new():
+    return render_template('post_new.html')
+
+@bp.route('/posts/save', methods=['POST'])
+def post_save():
+    title = request.form.get('title')
+    content = request.form.get('content')
+    if title and content:
+        post = Post(title=title, content=content)
+        db.session.add(post)
+        db.session.commit()
+    return redirect(url_for('main.post_list'))
+
+@bp.route('/posts/<int:post_id>')
+def post_detail(post_id):
+    post = Post.query.get_or_404(post_id)
+    return render_template('post_detail.html', post=post)
+
+
 @bp.route('/user/new')
 def index():
     return render_template('index.html')

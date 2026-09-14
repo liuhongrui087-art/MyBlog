@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}写文章{% endblock %}
+
+{% block content %}
+    <h3>写新文章</h3>
+    <form action="{{ url_for('main.post_save') }}" method="post">
+        <p>
+            <label>标题</label><br>
+            <input type="text" name="title" size="50">
+        </p>
+        <p>
+            <label>正文</label><br>
+            <textarea name="content" rows="10" cols="60"></textarea>
+        </p>
+        <button type="submit">发布</button>
+    </form>
+{% endblock %}

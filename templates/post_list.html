@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block title %}文章列表{% endblock %}
+
+{% block content %}
+    <h3>所有文章</h3>
+
+    {% if posts %}
+        <ul>
+        {% for post in posts %}
+            <li>
+                <a href="{{ url_for('main.post_detail', post_id=post.id) }}">{{ post.title }}</a>
+                <small>{{ post.created_at.strftime('%Y-%m-%d %H:%M') }}</small>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>还没有文章，去写一篇吧！</p>
+    {% endif %}
+
+    <p><a href="{{ url_for('main.post_new') }}">+ 写新文章</a></p>
+{% endblock %}
