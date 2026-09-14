@@ -17,7 +17,7 @@ def index():
 
 @bp.route('/about')
 def about():
-    return 'This is the About Page.'
+    return render_template('about.html')
 
 @bp.route('/greet/<name>')
 def greet(name):
