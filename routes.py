@@ -60,6 +60,13 @@ def post_edit(post_id):
 
     return render_template('post_edit.html', post=post)
 
+@bp.route('/posts/<int:post_id>/delete', methods=['POST'])
+def post_delete(post_id):
+    post = Post.query.get_or_404(post_id)
+    db.session.delete(post)
+    db.session.commit()
+    return redirect(url_for('main.post_list'))
+
 
 @bp.route('/user/new')
 def index():

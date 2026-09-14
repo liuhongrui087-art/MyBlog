@@ -12,7 +12,14 @@
         {% endif %}
     </small>
 </p>
-    <div class="post-content">{{ post.content }}</div>
-    <p><a href="{{ url_for('main.post_edit', post_id=post.id) }}">编辑</a></p>
+    <div style="display:flex; align-items:center; gap:16px; margin:16px 0">
+        <a href="{{ url_for('main.post_edit', post_id=post.id) }}">编辑</a>
+        <form action="{{ url_for('main.post_delete', post_id=post.id) }}" method="post"
+              onsubmit="return confirm('确定要删除这篇文章吗？');">
+            <button type="submit">删除</button>
+        </form>
+    </div>
+    </p>
+
     <p><a href="{{ url_for('main.post_list') }}">← 返回列表</a></p>
 {% endblock %}
